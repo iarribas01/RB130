@@ -1,6 +1,7 @@
+require 'simplecov'
 require 'minitest/autorun'
 require 'minitest/reporters'
-require 'simplecov'
+
 
 SimpleCov.start
 
@@ -25,9 +26,12 @@ class TodoListTest < Minitest::Test
     assert_equal(@todos, @list.to_a)
   end
 
+  def test_all_not_done
+    assert_equal([@todo1, @todo2, @todo3], @list.all_not_done.to_a)
+  end
+
   def test_size
     assert_equal(3, @list.size)
-    assert_equal()
   end
 
   def test_first
@@ -118,8 +122,8 @@ class TodoListTest < Minitest::Test
     assert_equal(false, @todo1.done?)
   end
 
-  def test_done
-    @list.done!
+  def test_mark_all_done
+    @list.mark_all_done
 
     assert(@todo1.done?)
     assert(@todo2.done?)
