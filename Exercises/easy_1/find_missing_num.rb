@@ -1,26 +1,32 @@
+# def missing(arr)
+#   result = []
+#   index = 0
+
+#   until index >= arr.length - 1
+#     next_element = arr[index + 1]
+#     current_element = arr[index]
+
+#     unless ((current_element + 1) == next_element)
+#       result += (current_element + 1 .. next_element-1).to_a
+#     end
+
+#     index += 1
+#   end
+
+#   result
+# end
+
 def missing(arr)
   result = []
-  arr.each_with_index do |n, index|
-    if (n + 1 == arr[index + 1]) # if the next element is +1
-      result << n
-    else
+  arr.each_cons(2) do |first, second|
+    unless first == second - 1
+      result += (first + 1..second-1).to_a
     end
   end
   result
 end
 
-=begin
-1. iterate through elements in array [1, 2, 4]
-2. check that the next element is +1 from the last
-  3. if it isn't, add the in_betweens to the result array
-    # iterate from [a..b-1] and add to result array
-  4. if it is, move to the next element
-5. continue until end of array is reached
-6. return result array
-
-=end
-p missing([1, 2, 3])
-# missing([-3, -2, 1, 5]) == [-1, 0, 2, 3, 4]
-# missing([1, 2, 3, 4]) == []
-# missing([1, 5]) == [2, 3, 4]
-# missing([6]) == []
+p missing([-3, -2, 1, 5]) == [-1, 0, 2, 3, 4]
+p missing([1, 2, 3, 4]) == []
+p missing([1, 5]) == [2, 3, 4]
+p missing([6]) == []
