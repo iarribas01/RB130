@@ -17,6 +17,8 @@ class Transaction
       puts 'That is not the correct amount. ' \
            'Please make sure to pay the full cost.'
     end
+
+    $stdout = STDOUT
   end
 
   private
