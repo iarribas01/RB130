@@ -1,14 +1,18 @@
+class InvalidTriangleError < StandardError; end
+
 class Triangle 
   def initialize(side1, side2, side3)
     @side1 = side1
     @side2 = side2
     @side3 = side3
+    raise InvalidTriangleError if !valid?
   end
 
   def kind
-    if isosceles?      then 'isoceles'
+    if    !valid?      then 'invalid'
+    elsif isosceles?   then 'isoceles'
     elsif equilateral? then 'equilateral'
-    else                    'scalene'
+    elsif scalene?     then 'scalene'
     end
   end
 
@@ -27,6 +31,19 @@ class Triangle
 
   def scalene?
     sides.uniq.size == 3
+  end
+
+  def valid?
+    
+    return true unless sides.any?{|s| s <= 0}
+    
+    unless (sides[1, 2].sum < sides[0] ||
+            sides[0, 2].sum < sides[1] ||
+            sides[0, 1].sum < sides[2] )
+              return true
+    end
+
+    false
   end
 end
 
