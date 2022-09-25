@@ -5,12 +5,13 @@ class Triangle
     @side1 = side1
     @side2 = side2
     @side3 = side3
-    raise InvalidTriangleError if !valid?
+    raise ArgumentError if !valid?
+    # raise InvalidTriangleError if !valid?
   end
 
   def kind
     if    !valid?      then 'invalid'
-    elsif isosceles?   then 'isoceles'
+    elsif isosceles?   then 'isosceles'
     elsif equilateral? then 'equilateral'
     elsif scalene?     then 'scalene'
     end
@@ -34,17 +35,16 @@ class Triangle
   end
 
   def valid?
+    return false if sides.any?{|s| s <= 0}
     
-    return true unless sides.any?{|s| s <= 0}
-    
-    unless (sides[1, 2].sum < sides[0] ||
-            sides[0, 2].sum < sides[1] ||
-            sides[0, 1].sum < sides[2] )
-              return true
-    end
+    return false if (
+      @side1 + @side2 <= @side3 ||
+      @side2 + @side3 <= @side1 ||
+      @side1 + @side3 <= @side2
+    )
 
-    false
+    true
   end
 end
 
-puts Triangle.new(2, 3, 1).kind
+# puts Triangle.new(0, 0, 0).kind
