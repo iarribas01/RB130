@@ -4,7 +4,7 @@ class BeerSong
 
     99.downto(1) do |n|
       song += "#{n} bottles of beer on the wall, #{n} bottles of beer.\n" \
-      "Take one down and pass it around, #{n-1} bottles of beer on the wall.\n"
+      "Take one down and pass it around, #{n-1} bottles of beer on the wall.\n\n"
     end
 
     song.gsub!(/\s1\sbottles/, " 1 bottle")
@@ -14,7 +14,11 @@ class BeerSong
   end
 
   def self.verse(num)
-    lyrics.scan(/^#{num}\s.+\n.+wall\./).join
+    lyrics.scan(/^#{num} .+\n.+wall\./).join
+  end
+
+  def self.verses(start_verse, end_verse)
+    lyrics.scan(/^#{start_verse} bottles (.|\n)+pass it around, #{end_verse-1} .+/).join
   end
 end
 
