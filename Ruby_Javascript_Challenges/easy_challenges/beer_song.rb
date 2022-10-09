@@ -7,18 +7,21 @@ class BeerSong
       "Take one down and pass it around, #{n-1} bottles of beer on the wall.\n"
     end
 
+    song.gsub!(/^1 bottles/, " 1 bottle")
     song.gsub!(/ 1 bottles/, " 1 bottle")
-    song.gsub!(/ 0 bottles of beer on the wall.\n/, " no more bottles of beer on the wall.")
+    song.gsub!(/ 0 bottles/, " no more bottles")
 
     song
   end
 
   def self.verse(num)
-    lyrics.scan(/^#{num} .+\n.+wall\.\n/).join
+    lyrics.scan(/^#{num} .+\n.+wall\.\n*/).join
   end
 
   def self.verses(start_verse, end_verse)
-    lyrics.scan(/^#{start_verse} bottles* (.|\n)+pass it around, #{end_verse-1} .+/).join
+    if (end_verse < start_verse && end_verse >= 0 ** start_verse < 100) 
+      lyrics.scan(/^#{start_verse} .+\n+pass it around, #{end_verse-1} .+/).join
+    end
   end
 end
 
